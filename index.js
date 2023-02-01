@@ -1,6 +1,14 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
+const sprite = new Image();
+const grassBottom = new Image();
+const grassTop = new Image();
+const asphalt = new Image();
+const splat = new Image();
+const carsRight = new Image();
+const carsLeft = new Image();
+
 const createSplash = () => {
   const splash = document.createElement("div");
   splash.classList.add("splash");
@@ -138,7 +146,6 @@ class Dog {
     let yAdjustment = 10;
     const spriteWidth = 48;
     const spriteHeight = 48;
-    const sprite = new Image();
     sprite.src = "./images/dog.png";
 
     if (global.dogPosition === 3) {
@@ -219,16 +226,14 @@ class Car {
   }
 
   draw() {
-    const cars = new Image();
-
     let spriteWidth = 63;
     let spriteHeight = 32;
 
     if (this.speed > 0) {
-      cars.src = "./images/cars.png";
+      carsRight.src = "./images/cars.png";
       if (this.width === 350) {
         ctx.drawImage(
-          cars,
+          carsRight,
           spriteWidth * 0,
           spriteHeight * this.model,
           spriteWidth,
@@ -240,7 +245,7 @@ class Car {
         );
       } else if (this.width === 200) {
         ctx.drawImage(
-          cars,
+          carsRight,
           spriteWidth * 0,
           spriteHeight * this.model,
           spriteWidth + 1,
@@ -252,7 +257,7 @@ class Car {
         );
       } else if (this.width === 300) {
         ctx.drawImage(
-          cars,
+          carsRight,
           spriteWidth * 0,
           spriteHeight * this.model,
           spriteWidth + 1,
@@ -264,10 +269,10 @@ class Car {
         );
       }
     } else if (this.speed < 0) {
-      cars.src = "./images/cars-reversed.png";
+      carsLeft.src = "./images/cars-reversed.png";
       if (this.width === 350) {
         ctx.drawImage(
-          cars,
+          carsLeft,
           352 - spriteWidth * 2,
           spriteHeight * this.model,
           spriteWidth,
@@ -279,7 +284,7 @@ class Car {
         );
       } else if (this.width === 200) {
         ctx.drawImage(
-          cars,
+          carsLeft,
           351 - spriteWidth * 2,
           spriteHeight * this.model,
           spriteWidth,
@@ -291,7 +296,7 @@ class Car {
         );
       } else if (this.width === 300) {
         ctx.drawImage(
-          cars,
+          carsLeft,
           351 - spriteWidth * 2,
           spriteHeight * this.model,
           spriteWidth + 1,
@@ -364,7 +369,6 @@ class Splat {
       this.opacity = 0;
     }
     ctx.globalAlpha = this.opacity;
-    const splat = new Image();
     splat.src = this.src;
     ctx.drawImage(splat, this.x, this.y);
 
@@ -483,7 +487,6 @@ const drawCanvas = () => {
 };
 
 const drawAsphalt = () => {
-  const asphalt = new Image();
   asphalt.src = "./images/asphalt.png";
   ctx.drawImage(asphalt, 0, 0);
 };
@@ -516,13 +519,13 @@ const drawGrass = (y) => {
   ctx.shadowColor = "rgba(0,0,0,1)";
   ctx.shadowOffsetX = 0;
   ctx.shadowBlur = 4;
-  const grass = new Image();
+  grassBottom.src = "./images/grass-bottom.png";
+  grassTop.src = "./images/grass-top.png";
   if (y < 100) {
-    grass.src = "./images/grass-bottom.png";
+    ctx.drawImage(grassBottom, 0, y);
   } else {
-    grass.src = "./images/grass-top.png";
+    ctx.drawImage(grassTop, 0, y);
   }
-  ctx.drawImage(grass, 0, y);
 };
 
 const drawScenery = () => {
